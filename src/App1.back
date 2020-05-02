@@ -1,0 +1,58 @@
+import React, {Component} from 'react';
+import customAxios from './customAxios';
+
+class App extends Component{
+
+  constructor(){
+    super();
+    this.state = {
+      idtest_Table : null,
+       test_name : null
+    }
+  }  
+
+  componentDidMount(){
+    this.fetchPostInfo();
+  }
+
+  fetchPostInfo = async () => {
+   /*동기 요청 */
+    try{
+        const info = await Promise.all([
+          customAxios()
+        ]); 
+
+        console.log(info); // info의 정보를 확인      
+
+        //const {title, body} = info[0].data; 
+
+        this.setState({
+          idtest_Table : info[0].data[0].idtest_Table
+        });
+        // this.setState({
+        //   idtest_Table : info[0].data,
+        //   test_name : null
+        //     // post:{
+        //     //     title,
+        //     //     body
+        //     // }
+        // })
+        console.log('this.state: ', this.state);
+    } catch(e){
+        console.log('error occured',e);
+    }
+    
+  }
+
+  render(){
+    const {idtest_Table} = this.state;
+
+    return(
+      <div>
+       {idtest_Table}
+      </div>
+    ) 
+  }
+}
+
+export default App;
